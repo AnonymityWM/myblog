@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--MyBatis配置文件-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.blog.dao.mapper.SysUserMapper">
+
+    <resultMap id="sysUserMap" type="com.blog.dao.pojo.SysUser">
+        <id column="id" property="id" />
+        <result column="account" property="account"/>
+        <result column="admin" property="admin"/>
+        <result column="avatar" property="avatar"/>
+        <result column="create_date" property="createDate"/>
+        <result column="deleted" property="deleted"/>
+        <result column="email" property="email"/>
+        <result column="last_login" property="lastLogin"/>
+        <result column="mobile_phone_number" property="mobilePhoneNumber"/>
+        <result column="nickname" property="nickname"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <select id="findUser" parameterType="java.lang.String" resultMap="sysUserMap">
+        select * from ms_sys_user where account=#{account} and password=#{password} limit 1
+    </select>
+
+    <select id="findUserByAccount" parameterType="java.lang.String" resultMap="sysUserMap">
+        select * from ms_sys_user where account=#{account}
+    </select>
+
+    <insert id="save" parameterType="com.blog.dao.pojo.SysUser" useGeneratedKeys="true">
+        insert into ms_sys_user(
+        <if test="account != null and account != ''">account,</if>
+        <if test="admin != null">admin,</if>
+        <if test="avatar != null and avatar != ''">avatar,</if>
+        <if test="email != null and email != ''">email,</if>
+        <if test="lastLogin != null">last_login,</if>
+        <if test="mobilePhoneNumber != null and mobilePhoneNumber != ''">mobile_phone_number,</if>
+        <if test="nickname != null and nickname != ''">nickname,</if>
+        <if test="password != null and password != ''">password,</if>
+        <if test="salt != null and salt != ''">salt,</if>
+        <if test="status != null and status != ''">status,</if>
+        create_date)
+        values(
+        <if test="account != null and account != ''">#{account},</if>
+        <if test="admin != null">#{admin},</if>
+        <if test="avatar != null and avatar != ''">#{avatar},</if>
+        <if test="email != null and email != ''">#{email},</if>
+        <if test="lastLogin != null">#{lastLogin},</if>
+        <if test="mobilePhoneNumber != null and mobilePhoneNumber != ''">#{mobilePhoneNumber},</if>
+        <if test="nickname != null and nickname != ''">#{nickname},</if>
+        <if test="password != null and password != ''">#{password},</if>
+        <if test="salt != null and salt != ''">#{salt},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        )
+    </insert>
+
+
+</mapper>

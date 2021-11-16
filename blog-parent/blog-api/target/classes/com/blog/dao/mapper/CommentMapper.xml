@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--MyBatis配置文件-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.blog.dao.mapper.CommentMapper">
+
+    <resultMap id="commentMap" type="com.blog.dao.pojo.Comment">
+        <id column="id" property="id" />
+        <result column="content" property="content"/>
+        <result column="create_date" property="createDate"/>
+        <result column="article_id" property="articleId"/>
+        <result column="author_id" property="authorId"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="to_uid" property="toUid"/>
+        <result column="level" property="level"/>
+    </resultMap>
+
+    <select id="selectList" parameterType="java.lang.Long" resultMap="commentMap">
+        select * from ms_comment where article_id = #{id} and level = 1 order by create_date;
+    </select>
+
+    <select id="selectChildren" parameterType="java.lang.Long" resultMap="commentMap">
+        select * from ms_comment where parent_id = #{parentId} and level = 2 order by create_date;
+    </select>
+
+</mapper>
